@@ -120,6 +120,13 @@ Contributions are welcome! Please feel free to submit a Pull Request.
       </a>
     </td>
     <td align="center">
+      <a href="https://github.com/prawinkumar1506">
+        <img src="https://github.com/prawinkumar1506.png" width="100px;" alt="Rahul"/>
+        <br />
+        <sub><b>Rahul</b></sub>
+      </a>
+    </td>
+    <td align="center">
       <a href="https://github.com/Ramcharan-Swaminathan">
         <img src="https://github.com/Ramcharan-Swaminathan.png" width="100px;" alt="Ramcharan Swaminathan"/>
         <br />
