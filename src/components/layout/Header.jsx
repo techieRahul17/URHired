@@ -5,18 +5,23 @@ import { motion } from "framer-motion"
 import { Bell, Search } from "lucide-react"
 import { useAuth } from "../../context/AuthContext"
 import Avatar from "../ui/Avatar"
+import { useNavigate } from "react-router-dom"
 
 const Header = ({ title }) => {
-    const { currentUser, userType } = useAuth()
+    const { currentUser, userType, logout } = useAuth()
     const [showNotifications, setShowNotifications] = useState(false)
     const [showProfile, setShowProfile] = useState(false)
+     const navigate = useNavigate()
 
-    // Mock notifications
     const notifications = [
         { id: 1, message: "New application received for Frontend Developer", time: "5 min ago", read: false },
         { id: 2, message: "Interview scheduled with John Doe", time: "1 hour ago", read: false },
         { id: 3, message: "Resume analysis complete for 5 candidates", time: "3 hours ago", read: true },
     ]
+    const handleLogout = async () => {
+        await logout()
+        navigate("/")
+    }
 
     return (
         <header className="bg-white shadow-sm py-4 px-6 flex items-center justify-between">
@@ -87,8 +92,8 @@ const Header = ({ title }) => {
                 </div>
 
                 {/* User Profile */}
-                <div className="relative">
-                    <button className="flex items-center space-x-2" onClick={() => setShowProfile(!showProfile)}>
+                <div className="relative ">
+                    <button className="flex items-center  cursor-pointer space-x-2" onClick={() => setShowProfile(!showProfile)}>
                         <Avatar src={currentUser?.photoURL} alt={currentUser?.displayName || "User"} size="sm" />
                         <span className="hidden md:block text-sm font-medium">{currentUser?.displayName || "User"}</span>
                     </button>
@@ -106,13 +111,16 @@ const Header = ({ title }) => {
                             </div>
 
                             <div>
-                                <button className="w-full text-left px-3 py-2 hover:bg-gray-50 transition-colors text-sm">
+                                <button className="w-full text-left cursor-pointer px-3 py-2 hover:bg-gray-50 transition-colors text-sm">
                                     Profile Settings
                                 </button>
-                                <button className="w-full text-left px-3 py-2 hover:bg-gray-50 transition-colors text-sm">
+                                <button className="w-full text-left cursor-pointer px-3 py-2 hover:bg-gray-50 transition-colors text-sm">
                                     Help & Support
                                 </button>
-                                <button className="w-full text-left px-3 py-2 hover:bg-gray-50 transition-colors text-sm border-t border-gray-100 text-red-500">
+                                <button
+                                    onClick={handleLogout}
+                                    className="w-full cursor-pointer text-left px-3 py-2 hover:bg-gray-50 transition-colors text-sm border-t border-gray-100 text-red-500"
+                                >
                                     Logout
                                 </button>
                             </div>
@@ -125,4 +133,3 @@ const Header = ({ title }) => {
 }
 
 export default Header
-
