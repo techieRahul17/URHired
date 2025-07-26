@@ -18,9 +18,21 @@ const Login = () => {
     const { login } = useAuth()
     const navigate = useNavigate()
 
+    const isValidEmail = (email) => {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         setError("")
+
+        // Validation
+        if (!isValidEmail(email)) {
+          return setError("Please enter a valid email address");
+        }
+        if (!password) {
+          return setError("Password is required");
+        }
         setLoading(true)
 
         try {
