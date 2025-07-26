@@ -20,11 +20,24 @@ const Register = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
 
+  const isValidEmail = (email) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
     // Validation
+    if (!name.trim()) {
+      return setError("Name is required");
+    }
+    if (!isValidEmail(email)) {
+      return setError("Please enter a valid email address");
+    }
+    if (password.length < 6) {
+      return setError("Password must be at least 6 characters");
+    }
     if (password !== confirmPassword) {
       return setError("Passwords do not match");
     }
