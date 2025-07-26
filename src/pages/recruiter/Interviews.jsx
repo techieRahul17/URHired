@@ -247,7 +247,7 @@ const Interviews = () => {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.3, delay: index * 0.05 }}
                             >
-                                <Card className="h-full">
+                                <Card className="h-full text-black">
                                     <div className="p-6">
                                         <div className="flex justify-between items-start mb-4">
                                             <div className="flex items-center">

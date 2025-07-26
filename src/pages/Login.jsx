@@ -1,5 +1,5 @@
 "use client"
-
+import { toast } from 'react-toastify';
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { motion } from "framer-motion"
@@ -34,7 +34,7 @@ const Login = () => {
                 }
 
                 login(user, userType)
-
+                toast.success('Login successful!');
                 // Redirect to the appropriate dashboard
                 if (userType === "recruiter") {
                     navigate("/recruiter/dashboard")
@@ -43,6 +43,7 @@ const Login = () => {
                 }
             }, 1500)
         } catch (err) {
+            toast.error('Login failed. Please try again.');
             setError("Failed to log in. Please check your credentials.")
             setLoading(false)
         }

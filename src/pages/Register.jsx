@@ -1,5 +1,5 @@
 "use client"
-
+import { toast } from 'react-toastify';
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { motion } from "framer-motion"
@@ -42,7 +42,7 @@ const Register = () => {
                 }
 
                 login(user, userType)
-
+                toast.success('Welcome to URHired..you are successfully registered');
                 // Redirect to the appropriate dashboard
                 if (userType === "recruiter") {
                     navigate("/recruiter/dashboard")
@@ -51,6 +51,7 @@ const Register = () => {
                 }
             }, 1500)
         } catch (err) {
+            toast.error('Registeration  failed. Please try again.');
             setError("Failed to create an account. Please try again.")
             setLoading(false)
         }
