@@ -61,6 +61,11 @@ const Sidebar = () => {
             path: `${basePath}/settings`,
         },
         {
+            title: "Profile",
+            icon: <Settings size={20} />,
+            path: `${basePath}/recruiterProfile`,
+        },
+        {
             title: "Logout",
             icon: <LogOut size={20} />,
             path:`/`
