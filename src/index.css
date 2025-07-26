@@ -8,46 +8,78 @@
   }
 }
 
+/* Light Mode */
 :root {
-  --scrollbar-thumb: rgba(139, 92, 246, 0.5);
-  --scrollbar-track: rgba(0, 0, 0, 0.1);
+  --background: 0 0% 98%;               /* Soft gray-white */
+  --foreground: 222.2 84% 10%;          /* Dark gray text */
+
+  /* Glass card */
+  --card-bg: rgba(255, 255, 255, 0.65);
+  --card-border: rgba(0, 0, 0, 0.05);
+  --card-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+
+  /* Accent gradient */
+  --gradient-start: #a78bfa;
+  --gradient-end: #ec4899;
+
+  /* Section background */
+  --bg-section: #f4f4f6;
+  --text-primary: #111827;
 }
 
-html {
-  scroll-behavior: smooth;
+/* Dark Mode */
+.dark {
+  --background: 222.2 84% 4.9%;
+  --foreground: 210 40% 98%;
+
+  --card-bg: rgba(17, 17, 17, 0.6);
+  --card-border: rgba(255, 255, 255, 0.1);
+  --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+
+  --gradient-start: #7c3aed;
+  --gradient-end: #db2777;
+
+  --bg-section: #0f172a;
+  --text-primary: #f8fafc;
 }
 
+/* Apply body colors */
 body {
-  background-color: #0f0f0f;
-  color: white;
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
   font-family: "Inter", sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-::-webkit-scrollbar {
-  width: 10px;
+/* Card styling */
+.card {
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--card-border);
+  border-radius: 1rem;
+  box-shadow: var(--card-shadow);
+  padding: 1.5rem;
+  transition: all 0.3s ease-in-out;
 }
 
-::-webkit-scrollbar-track {
-  background: var(--scrollbar-track);
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
+/* Scrollbar */
+::-webkit-scrollbar { width: 10px; }
 ::-webkit-scrollbar-thumb {
-  background: var(--scrollbar-thumb);
+  background: rgba(139, 92, 246, 0.7);
   border-radius: 5px;
 }
+::-webkit-scrollbar-thumb:hover { background: rgba(236, 72, 153, 0.8); }
 
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(139, 92, 246, 0.7);
+/* Icon animations */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
-
-/* For Firefox */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
-}
-
-/* Gradient text utility */
-.gradient-text {
-  @apply bg-gradient-to-r from-purple-400 to-pink-500 text-transparent bg-clip-text;
-}
-
+.animate-spin-slow { animation: spin-slow 8s linear infinite; }
