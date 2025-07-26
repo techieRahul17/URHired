@@ -1,7 +1,9 @@
+
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -18,17 +20,19 @@ import UserInterviews from './pages/user/Interviews';
 import UserProfile from './pages/user/Profile';
 import RecruiterProfile from './pages/recruiter/RecruiterProfile';
 import NotFound from './pages/NotFound';
-import { AuthProvider } from './context/AuthContext';
+import ThemeToggle from './components/ThemeToggle';
 
 function App() {
     return (
         <AuthProvider>
             <ToastContainer position="top-right" autoClose={3000} />
             <Router>
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Register />} />
+                {/* Root wrapper that responds to dark mode */}
+                <div className="min-h-screen bg-background text-foreground transition-colors duration-500">
+                    {/* Floating Theme Toggle */}
+                    <div className="fixed top-4 right-4 z-[9999] pointer-events-auto">
+                        <ThemeToggle />
+                    </div>
 
                     {/* Recruiter Routes */}
                     <Route path="/recruiter/dashboard" element={<RecruiterDashboard />} />
@@ -45,9 +49,16 @@ function App() {
                     <Route path="/user/interviews" element={<UserInterviews />} />
                     <Route path="/user/profile" element={<UserProfile />} />
 
+                        {/* User Routes */}
+                        <Route path="/user/dashboard" element={<UserDashboard />} />
+                        <Route path="/user/jobs" element={<UserJobs />} />
+                        <Route path="/user/applications" element={<UserApplications />} />
+                        <Route path="/user/interviews" element={<UserInterviews />} />
+                        <Route path="/user/profile" element={<UserProfile />} />
 
-                    <Route path="*" element={<NotFound />} />
-                </Routes>
+                        <Route path="*" element={<NotFound />} />
+                    </Routes>
+                </div>
             </Router>
         </AuthProvider>
     );
