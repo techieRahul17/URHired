@@ -14,6 +14,7 @@ import UserJobs from './pages/user/Jobs';
 import UserApplications from './pages/user/Applications';
 import UserInterviews from './pages/user/Interviews';
 import UserProfile from './pages/user/Profile';
+import RecruiterProfile from './pages/recruiter/RecruiterProfile';
 import NotFound from './pages/NotFound';
 import { AuthProvider } from './context/AuthContext';
 
@@ -33,7 +34,7 @@ function App() {
                     <Route path="/recruiter/applications" element={<RecruiterApplications />} />
                     <Route path="/recruiter/interviews" element={<RecruiterInterviews />} />
                     <Route path="/recruiter/candidates/:id" element={<RecruiterCandidateDetails />} />
-
+                    <Route path="/recruiter/recruiterProfile" element={<RecruiterProfile/>}/>
                     {/* User Routes */}
                     <Route path="/user/dashboard" element={<UserDashboard />} />
                     <Route path="/user/jobs" element={<UserJobs />} />
