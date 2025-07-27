@@ -16,11 +16,13 @@ import UserInterviews from './pages/user/Interviews';
 import UserProfile from './pages/user/Profile';
 import NotFound from './pages/NotFound';
 import { AuthProvider } from './context/AuthContext';
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
     return (
         <AuthProvider>
             <Router>
+                <ScrollToTop />
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/login" element={<Login />} />
