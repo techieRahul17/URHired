@@ -21,7 +21,13 @@ const Register = () => {
   const navigate = useNavigate();
 
   const isValidEmail = (email) => {
+    // Basic email regex
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
+  const isStrongPassword = (password) => {
+    // Minimum 8 chars, at least one uppercase, one number, one special char
+    return /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/.test(password);
   };
 
   const handleSubmit = async (e) => {
@@ -32,11 +38,17 @@ const Register = () => {
     if (!name.trim()) {
       return setError("Name is required");
     }
+    if (!email.trim()) {
+      return setError("Email is required");
+    }
     if (!isValidEmail(email)) {
       return setError("Please enter a valid email address");
     }
-    if (password.length < 6) {
-      return setError("Password must be at least 6 characters");
+    if (!password) {
+      return setError("Password is required");
+    }
+    if (!isStrongPassword(password)) {
+      return setError("Password must be at least 8 characters, include an uppercase letter, a number, and a special character.");
     }
     if (password !== confirmPassword) {
       return setError("Passwords do not match");
