@@ -15,6 +15,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 80px; /* Offset for fixed navbar height */
 }
 
 body {
@@ -50,4 +51,3 @@ body {
 .gradient-text {
   @apply bg-gradient-to-r from-purple-400 to-pink-500 text-transparent bg-clip-text;
 }
-
