@@ -43,12 +43,17 @@ const Navbar = () => {
                         <NavLink scrolled={scrolled} href="#team">Team</NavLink>
                         <Link to="/login">
                             <motion.button
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                                className="px-6 py-2 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 text-white font-medium"
-                            >
-                                Login
-                            </motion.button>
+  whileHover={{
+    scale: 1.07,
+    boxShadow: "0 0 20px rgba(236, 72, 153, 0.5)",  
+  }}
+  whileTap={{ scale: 0.95 }}
+  transition={{ type: "spring", stiffness: 300 }}
+  className="px-6 cursor-pointer py-2 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold shadow-md hover:brightness-110 hover:tracking-wide duration-300 ease-in-out"
+>
+  Login
+</motion.button>
+
                         </Link>
                     </div>
 

@@ -163,7 +163,100 @@ const Login = () => {
                     ) : (
                       <FiEye size={20} />
                     )}
-                  </button>
+
+
+                    <form onSubmit={handleSubmit}>
+                        <div className="mb-6">
+                            <label className="block text-sm font-medium text-gray-700 mb-2">I am a:</label>
+                            <div className="grid grid-cols-2 gap-4 text-black">
+                                <motion.button
+                                    type="button"
+                                    className={`flex items-center justify-center p-3 rounded-md border-2 transition-all ${
+                                        userType === "user"
+                                            ? "border-purple-500 bg-purple-50 text-purple-700"
+                                            : "border-gray-200 hover:border-purple-200"
+                                    }`}
+                                    onClick={() => setUserType("user")}
+                                    whileHover={{ scale: 1.02 }}
+                                    whileTap={{ scale: 0.98 }}
+                                >
+                                    <User className="mr-2" size={18} />
+                                    <span>Candidate</span>
+                                </motion.button>
+
+                                <motion.button
+                                    type="button"
+                                    className={`flex items-center justify-center p-3 rounded-md border-2 transition-all ${
+                                        userType === "recruiter"
+                                            ? "border-purple-500 bg-purple-50 text-purple-700"
+                                            : "border-gray-200 hover:border-purple-200"
+                                    }`}
+                                    onClick={() => setUserType("recruiter")}
+                                    whileHover={{ scale: 1.02 }}
+                                    whileTap={{ scale: 0.98 }}
+                                >
+                                    <Briefcase className="mr-2" size={18} />
+                                    <span>Recruiter</span>
+                                </motion.button>
+                            </div>
+                        </div>
+
+                        <div className={"text-black"}>
+                        <Input
+                            label="Email Address"
+                            type="email"
+                            name="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="your@email.com"
+                            required
+                            icon={<Mail size={18} />}
+                        />
+
+                        <Input
+                            label="Password"
+                            type="password"
+                            name="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="••••••••"
+                            required
+                            icon={<Lock size={18} />}
+                        />
+                        </div>
+
+                        <div className="flex items-center justify-between mb-6 text-black">
+                            <div className="flex items-center text-black">
+                                <input
+                                    id="remember-me"
+                                    name="remember-me"
+                                    type="checkbox"
+                                    className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
+                                />
+                                <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-700">
+                                    Remember me
+                                </label>
+                            </div>
+
+                            <div className="text-sm">
+                                <a href="/reset-password" className="font-medium text-purple-600 hover:text-purple-500">
+                                    Forgot password?
+                                </a>
+                            </div>
+                        </div>
+
+                        <Button type="submit" variant="primary" fullWidth disabled={loading} className="mb-4">
+                            {loading ? "Signing in..." : "Sign In"}
+                        </Button>
+
+                        <p className="text-center text-sm text-gray-600">
+                            Don't have an account?{" "}
+                            <Link to="/register" className="font-medium text-purple-600 hover:text-purple-500">
+                                Sign up
+                            </Link>
+                        </p>
+                    </form>
+
                 </div>
               </div>
             </div>

@@ -16,6 +16,7 @@ import UserInterviews from './pages/user/Interviews';
 import UserProfile from './pages/user/Profile';
 import NotFound from './pages/NotFound';
 import { AuthProvider } from './context/AuthContext';
+import ForgetPassword from './pages/ForgetPassword';
 
 function App() {
     return (
@@ -25,6 +26,7 @@ function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
+                    <Route path="/reset-password" element={<ForgetPassword />} />
 
                     {/* Recruiter Routes */}
                     <Route path="/recruiter/dashboard" element={<RecruiterDashboard />} />
