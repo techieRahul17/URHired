@@ -7,6 +7,8 @@ import { Mail, Lock, User, Briefcase, UserPlus } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
+import { FiEye, FiEyeOff } from "react-icons/fi";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -16,6 +18,8 @@ const Register = () => {
   const [userType, setUserType] = useState("user");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -156,29 +160,59 @@ const Register = () => {
               icon={<Mail size={18} />}
             />
 
-            <Input
-              label="Password"
-              type="password"
-              name="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-              className="text-gray-900 mb-4"
-              required
-              icon={<Lock size={18} />}
-            />
+            <div className="relative">
+              <Input
+                label="Password"
+                type={showPassword ? "text" : "password"}
+                name="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••"
+                className="text-gray-900 mb-4"
+                required
+                icon={<Lock size={18} />}
+              />
+              <div className="absolute top-1/2 right-0 pr-3 flex items-center transform -translate-y-1/2 mt-1">
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="text-gray-500 hover:text-gray-700 focus:outline-none pt-3"
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
+                </button>
+              </div>
+            </div>
 
-            <Input
-              label="Confirm Password"
-              type="password"
-              name="confirmPassword"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              placeholder="••••••••"
-              className="text-gray-900 mb-4"
-              required
-              icon={<Lock size={18} />}
-            />
+            <div className="relative">
+              <Input
+                label="Confirm Password"
+                type={showConfirmPassword ? "text" : "password"}
+                name="confirmPassword"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="••••••••"
+                className="text-gray-900 mb-4"
+                required
+                icon={<Lock size={18} />}
+              />
+              <div className="absolute top-1/2 right-0 pr-3 flex items-center transform -translate-y-1/2 mt-1">
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="text-gray-500 hover:text-gray-700 focus:outline-none pt-3"
+                  aria-label={
+                    showConfirmPassword ? "Hide password" : "Show password"
+                  }
+                >
+                  {showConfirmPassword ? (
+                    <FiEyeOff size={20} />
+                  ) : (
+                    <FiEye size={20} />
+                  )}
+                </button>
+              </div>
+            </div>
 
             <Button
               type="submit"
