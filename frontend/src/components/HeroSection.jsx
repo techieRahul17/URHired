@@ -74,19 +74,29 @@ const HeroSection = () => {
                             </p>
                             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
                                 <motion.button
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
-                                    className="px-8 py-3 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 text-white font-medium text-lg shadow-lg"
-                                >
-                                    Get Started
-                                </motion.button>
+  whileHover={{
+    scale: 1.07,
+    boxShadow: "0px 0px 20px rgba(236, 72, 153, 0.6)", // pinkish glow
+  }}
+  whileTap={{ scale: 0.95 }}
+  transition={{ type: "spring", stiffness: 300 }}
+  className="px-8 py-3 cursor-pointer rounded-full bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold text-lg shadow-md hover:brightness-110 hover:tracking-wide duration-300 ease-in-out"
+>
+  Get Started
+</motion.button>
+
                                 <motion.button
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
-                                    className="px-8 py-3 rounded-full bg-white/10 backdrop-blur-sm border border-white/30 text-white font-medium text-lg"
-                                >
-                                    Learn More
-                                </motion.button>
+  whileHover={{
+    scale: 1.07,
+    boxShadow: "0px 0px 15px rgba(255, 255, 255, 0.4)",
+  }}
+  whileTap={{ scale: 0.95 }}
+  transition={{ type: "spring", stiffness: 300 }}
+  className="px-8 py-3 cursor-pointer rounded-full bg-white/10 backdrop-blur-sm border border-white/30 text-white font-semibold text-lg shadow-md hover:brightness-110 hover:tracking-wide duration-300 ease-in-out"
+>
+  Learn More
+</motion.button>
+
                             </div>
                         </motion.div>
                     </div>
