@@ -1,47 +1,70 @@
-🌟 URHired Code of Conduct
-Welcome to URHired! We’re building more than just software — we're building a community. To ensure everyone feels welcome, respected, and inspired, we ask all contributors to follow this Code of Conduct.
+# 🤝 Contributor Covenant Code of Conduct
 
-🌈 Our Community Values
-We strive to create a space where:
+## 👥 Our Pledge
 
-✅ Everyone feels safe, respected, and included
-✅ New contributors are welcomed and encouraged
-✅ Feedback is kind, helpful, and constructive
-✅ Collaboration is prioritized over competition
-✅ Mistakes are seen as opportunities to learn
+We pledge to make participation in our community a harassment-free experience for everyone, regardless of:
 
-🚫 Unacceptable Behavior
-We do not tolerate:
+- 🧓 Age
+- 🏋️‍♀️ Body size
+- 🧑‍🦯 Visible or invisible disability
+- 🌍 Ethnicity
+- 🧬 Sex characteristics
+- 🌈 Gender identity and expression
+- 🎓 Level of experience
+- 🏫 Education
+- 💸 Socio-economic status
+- 🌎 Nationality
+- 🧑‍🎤 Personal appearance
+- 👤 Race
+- 🙏 Religion
+- 🏳️‍🌈 Sexual identity and orientation
 
-❌ Harassment, hate speech, or discrimination
-❌ Personal attacks or insults
-❌ Sexually explicit or offensive language/images
-❌ Sharing personal info without consent
-❌ Disruptive behavior, trolling, or spamming
+We pledge to act and interact in ways that contribute to an open, welcoming, diverse, inclusive, and healthy community.
 
-📢 Reporting Issues
-Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting the project team.
+---
+
+## 💬 Our Standards
+
+### ✅ Examples of positive behavior:
+
+- ✨ Using welcoming and inclusive language  
+- 🤝 Being respectful of differing viewpoints and experiences  
+- 🧠 Gracefully accepting constructive criticism  
+- 📢 Focusing on what is best for the community  
+- 💡 Showing empathy towards other community members  
+
+### 🚫 Examples of unacceptable behavior:
+
+- 🛑 The use of sexualized language or imagery  
+- ❌ Trolling, insulting or derogatory comments, and personal or political attacks  
+- 💣 Public or private harassment  
+- 🔐 Publishing others’ private information without explicit permission  
+- 🚫 Other conduct that could reasonably be considered inappropriate in a professional setting  
+
+---
+
+## 🔧 Enforcement Responsibilities
+
+Project maintainers are responsible for clarifying the standards of acceptable behavior and are expected to take appropriate and fair corrective action in response to any instances of unacceptable behavior.
+
+---
+
+## 📝 Scope
+
+This Code of Conduct applies both within project spaces and in public spaces when an individual is representing the project or its community.
+
+---
+
+## 🚨 Enforcement
+
+Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting the project maintainer:
+
 📇 **LinkedIn Contact**: [Rahul V S](https://www.linkedin.com/in/rahul-v-s/)
-All complaints will be reviewed and investigated promptly and fairly.
 
-📍 Where This Applies
-This Code applies to all project spaces, including:
+All complaints will be reviewed and investigated promptly and fairly. Project maintainers are obligated to respect the privacy and confidentiality of the reporter.
 
-🛠 GitHub (issues, PRs, discussions)
-💬 Community chatrooms
-🌐 Social media & events where URHired is represented
+---
 
-🧭 Enforcement Steps
-URHired maintainers may respond to violations with:
+## 📜 Attribution
 
-⚠️ Warning – A private message with clarification
-🕒 Temporary Ban – From contributions/interactions
-🚫 Permanent Ban – For repeated or severe offenses
-
-📝 Credits
-This Code of Conduct is adapted from the Contributor Covenant v2.0, a widely adopted standard across open-source projects.
-
-🤝 Let’s Build Kindly
-We grow stronger by lifting each other up. Thank you for helping us keep URHired a safe, collaborative, and inspiring place for all.
-
-✨ Happy contributing! ✨
+This Code of Conduct is adapted from the [Contributor Covenant](https://www.contributor-covenant.org), version 2.1.
