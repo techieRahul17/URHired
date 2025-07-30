@@ -144,7 +144,7 @@ const Jobs = () => {
     return (
         <PageLayout title="Browse Jobs">
             <div className="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4 text-black">
-                <div className="flex-1 text-black">
+                <div className="flex-1 text-black mt-4">
                     <div className="relative">
                         <Input
                             placeholder="Search jobs by title, company, location, or keywords..."
