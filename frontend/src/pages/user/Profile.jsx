@@ -13,11 +13,14 @@ const Profile = () => {
     const [loading, setLoading] = useState(true);
     const [activeTab, setActiveTab] = useState('personal');
     const [editMode, setEditMode] = useState(false);
+    const [editProfile, setEditProfile] = useState(null);
+    const [newSkill, setNewSkill] = useState({ name: '', level: '' });
+    const [showAddSkill, setShowAddSkill] = useState(false);
 
     useEffect(() => {
         // Simulate API call
         setTimeout(() => {
-            setProfile({
+            const initialProfile = {
                 id: 1,
                 name: 'Rahul Prawin',
                 email: 'rahulvs@gmail.com',
@@ -78,30 +81,53 @@ const Profile = () => {
                     salary: '$120,000 - $150,000',
                     availability: 'Immediately'
                 }
-            });
+            };
 
+            setProfile(initialProfile);
+            setEditProfile(initialProfile); // initialize editProfile
             setLoading(false);
         }, 1500);
     }, []);
 
+    const handleEditChange = (field, value) => {
+        setEditProfile(prev => ({
+            ...prev,
+            [field]: value
+        }));
+    };
+
+    const handleSaveProfile = () => {
+        setProfile(editProfile);
+        setEditMode(false);
+    };
+
+    const handleDeleteSkill = (id) => {
+        setEditProfile(prev => ({
+            ...prev,
+            skills: prev.skills.filter(skill => skill.id !== id)
+        }));
+    };
+
     const handleAddSkill = () => {
-        // Implementation for adding a skill
-        console.log('Add skill');
+        setShowAddSkill(true);
     };
 
-    const handleAddExperience = () => {
-        // Implementation for adding experience
-        console.log('Add experience');
-    };
-
-    const handleAddEducation = () => {
-        // Implementation for adding education
-        console.log('Add education');
-    };
-
-    const handleAddCertification = () => {
-        // Implementation for adding certification
-        console.log('Add certification');
+    const handleSaveNewSkill = () => {
+        if (newSkill.name && newSkill.level) {
+            setEditProfile(prev => ({
+                ...prev,
+                skills: [
+                    ...prev.skills,
+                    {
+                        id: Date.now(), // unique id
+                        name: newSkill.name,
+                        level: Number(newSkill.level)
+                    }
+                ]
+            }));
+            setNewSkill({ name: '', level: '' });
+            setShowAddSkill(false);
+        }
     };
 
     if (loading) {
@@ -138,7 +164,7 @@ const Profile = () => {
                                 <Button
                                     variant={editMode ? "success" : "primary"}
                                     fullWidth
-                                    onClick={() => setEditMode(!editMode)}
+                                    onClick={editMode ? handleSaveProfile : () => setEditMode(true)}
                                     icon={editMode ? <Save size={16} /> : <Edit size={16} />}
                                 >
                                     {editMode ? 'Save Profile' : 'Edit Profile'}
@@ -191,12 +217,12 @@ const Profile = () => {
                             </div>
 
                             <div className="flex flex-wrap gap-2">
-                                {profile.skills.map((skill) => (
+                                {(editMode ? editProfile.skills : profile.skills).map((skill) => (
                                     <div key={skill.id} className="relative">
                                         <Badge variant="primary">
                                             {skill.name}
                                             {editMode && (
-                                                <button className="ml-1 text-purple-300 hover:text-purple-100">
+                                                <button className="ml-1 text-purple-300 hover:text-purple-100" onClick={() => handleDeleteSkill(skill.id)}>
                                                     <X size={14} />
                                                 </button>
                                             )}
@@ -204,6 +230,57 @@ const Profile = () => {
                                     </div>
                                 ))}
                             </div>
+
+                            {editMode && showAddSkill && (
+                                <div className="flex items-center space-x-2 mt-2">
+                                    <Input
+                                        placeholder="Skill Name"
+                                        value={newSkill.name}
+                                        onChange={e => setNewSkill({ ...newSkill, name: e.target.value })}
+                                    />
+                                    <Input
+                                        type="number"
+                                        placeholder="Level"
+                                        value={newSkill.level}
+                                        onChange={e => setNewSkill({ ...newSkill, level: e.target.value })}
+                                    />
+                                    <Button variant="success" size="sm" onClick={handleSaveNewSkill}>Save</Button>
+                                    <Button variant="ghost" size="sm" onClick={() => setShowAddSkill(false)}>Cancel</Button>
+                                </div>
+                            )}
+
+                            {editMode && (
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-black">
+                                    {editProfile.skills.map((skill) => (
+                                        <div key={skill.id} className="relative flex items-center space-x-2">
+                                            <Input
+                                                value={skill.name}
+                                                onChange={e => {
+                                                    const updatedSkills = editProfile.skills.map(s =>
+                                                        s.id === skill.id ? { ...s, name: e.target.value } : s
+                                                    );
+                                                    setEditProfile(prev => ({ ...prev, skills: updatedSkills }));
+                                                }}
+                                                className="flex-grow"
+                                            />
+                                            <Input
+                                                type="number"
+                                                value={skill.level}
+                                                onChange={e => {
+                                                    const updatedSkills = editProfile.skills.map(s =>
+                                                        s.id === skill.id ? { ...s, level: Number(e.target.value) } : s
+                                                    );
+                                                    setEditProfile(prev => ({ ...prev, skills: updatedSkills }));
+                                                }}
+                                                className="w-20"
+                                            />
+                                            <button className="text-red-500 hover:text-red-700" onClick={() => handleDeleteSkill(skill.id)}>
+                                                <Trash2 size={18} />
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                         </div>
 
                         <div className="mt-6 pt-6 border-t border-gray-200">
@@ -346,11 +423,13 @@ const Profile = () => {
                                                     <div className="flex items-center space-x-2">
                                                         <Input
                                                             value={skill.name}
+                                                            onChange={e => handleEditChange('name', e.target.value)}
                                                             className="flex-grow"
                                                         />
                                                         <Input
                                                             type="number"
                                                             value={skill.level}
+                                                            onChange={e => handleEditChange('level', e.target.value)}
                                                             className="w-20"
                                                         />
                                                         <button className="text-red-500 hover:text-red-700">
@@ -398,6 +477,7 @@ const Profile = () => {
                                                         <Input
                                                             label="Position"
                                                             value={exp.position}
+                                                            onChange={e => handleEditChange('position', e.target.value)}
                                                             className="flex-grow mr-2"
                                                         />
                                                         <button className="text-red-500 hover:text-red-700 self-end mb-4">
@@ -407,19 +487,23 @@ const Profile = () => {
                                                     <Input
                                                         label="Company"
                                                         value={exp.company}
+                                                        onChange={e => handleEditChange('company', e.target.value)}
                                                     />
                                                     <Input
                                                         label="Location"
                                                         value={exp.location}
+                                                        onChange={e => handleEditChange('location', e.target.value)}
                                                     />
                                                     <div className="grid grid-cols-2 gap-4">
                                                         <Input
                                                             label="Start Date"
                                                             value={exp.startDate}
+                                                            onChange={e => handleEditChange('startDate', e.target.value)}
                                                         />
                                                         <Input
                                                             label="End Date"
                                                             value={exp.endDate}
+                                                            onChange={e => handleEditChange('endDate', e.target.value)}
                                                         />
                                                     </div>
                                                     <div>
@@ -472,6 +556,7 @@ const Profile = () => {
                                                             <Input
                                                                 label="Degree"
                                                                 value={edu.degree}
+                                                                onChange={e => handleEditChange('degree', e.target.value)}
                                                                 className="flex-grow mr-2"
                                                             />
                                                             <button className="text-red-500 hover:text-red-700 self-end mb-4">
@@ -481,20 +566,24 @@ const Profile = () => {
                                                         <Input
                                                             label="Institution"
                                                             value={edu.institution}
+                                                            onChange={e => handleEditChange('institution', e.target.value)}
                                                         />
                                                         <div className="grid grid-cols-2 gap-4">
                                                             <Input
                                                                 label="Start Date"
                                                                 value={edu.startDate}
+                                                                onChange={e => handleEditChange('startDate', e.target.value)}
                                                             />
                                                             <Input
                                                                 label="End Date"
                                                                 value={edu.endDate}
+                                                                onChange={e => handleEditChange('endDate', e.target.value)}
                                                             />
                                                         </div>
                                                         <Input
                                                             label="GPA"
                                                             value={edu.gpa}
+                                                            onChange={e => handleEditChange('gpa', e.target.value)}
                                                         />
                                                     </div>
                                                 ) : (
@@ -534,6 +623,7 @@ const Profile = () => {
                                                             <Input
                                                                 label="Certification Name"
                                                                 value={cert.name}
+                                                                onChange={e => handleEditChange('name', e.target.value)}
                                                                 className="flex-grow mr-2"
                                                             />
                                                             <button className="text-red-500 hover:text-red-700 self-end mb-4">
@@ -543,10 +633,12 @@ const Profile = () => {
                                                         <Input
                                                             label="Issuing Organization"
                                                             value={cert.issuer}
+                                                            onChange={e => handleEditChange('issuer', e.target.value)}
                                                         />
                                                         <Input
                                                             label="Date"
                                                             value={cert.date}
+                                                            onChange={e => handleEditChange('date', e.target.value)}
                                                         />
                                                     </div>
                                                 ) : (
