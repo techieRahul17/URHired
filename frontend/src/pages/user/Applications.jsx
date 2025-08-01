@@ -148,7 +148,7 @@ const Applications = () => {
     return (
         <PageLayout title="My Applications">
             <div className="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4 text-black">
-                <div className="flex-1">
+                <div className="flex-1 mt-4">
                     <div className="relative">
                         <Input
                             placeholder="Search by job title, company, or location..."
