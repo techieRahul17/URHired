@@ -136,7 +136,17 @@ Contributions are welcome! Please feel free to submit a Pull Request.
   </tr>
 </table>
 
-### How to contribute:
+ ## Getting Started for Beginners 
+
+To get this project running on your local machine, follow these simple steps:
+
+## Prerequisites
+- Node.js and npm installed
+- Git installed
+- MongoDB installed locally or use MongoDB Atlas
+
+
+## How to contribute:
 
 1. Fork the project
 2. Create your feature branch (`git checkout -b feature/amazing-feature`)
