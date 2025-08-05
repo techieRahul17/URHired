@@ -57,3 +57,24 @@ function App() {
 }
 
 export default App;
+
+import React, { useEffect, useState } from 'react';
+import Loader from './components/Loader';
+
+function App() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => setIsLoading(false), 1500);
+    return () => clearTimeout(timeout);
+  }, []);
+
+  if (isLoading) return <Loader />;
+
+  return (
+    <div className="relative z-10">
+      {/* Main App Content */}
+    </div>
+  );
+}
+
