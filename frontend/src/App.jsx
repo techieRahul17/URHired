@@ -18,10 +18,13 @@ import NotFound from './pages/NotFound';
 import { AuthProvider } from './context/AuthContext';
 import ForgetPassword from './pages/ForgetPassword';
 import RecruiterSettings from './pages/recruiter/Settings';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
     return (
         <AuthProvider>
+            <ToastContainer position="top-right" autoClose={3000} />
             <Router>
                 <Routes>
                     <Route path="/" element={<Home />} />

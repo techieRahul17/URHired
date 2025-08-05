@@ -17,6 +17,8 @@ import {
     ChevronRight,
     ChevronLeft,
 } from "lucide-react"
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
     const { userType, logout } = useAuth()
@@ -26,6 +28,15 @@ const Sidebar = () => {
     const [expandedMenus, setExpandedMenus] = useState({})
 
     const basePath = userType === "recruiter" ? "/recruiter" : "/user"
+    const navigate = useNavigate();
+
+
+    const handleLogout = () => {
+    logout(); // from your AuthContext
+    toast.success("Logged out successfully");
+    navigate("/"); // redirect to login or homepage
+    };
+
 
     const toggleMenu = (menuKey) => {
         setExpandedMenus((prev) => ({
@@ -63,8 +74,9 @@ const Sidebar = () => {
         {
             title: "Logout",
             icon: <LogOut size={20} />,
-            path:`/`
-        },
+            onClick: handleLogout
+        }
+
     ]
 
     const userMenuItems = [
@@ -96,8 +108,9 @@ const Sidebar = () => {
         {
             title: "Logout",
             icon: <LogOut size={20} />,
-            path:`/`
-        },
+            onClick: handleLogout
+        }
+
     ]
 
     const menuItems = userType === "recruiter" ? recruiterMenuItems : userMenuItems
@@ -149,21 +162,39 @@ const Sidebar = () => {
                             <nav className="p-4">
                                 <ul className="space-y-2">
                                     {menuItems.map((item) => (
-                                        <li key={item.path}>
+                                        <li key={item.title}>
+                                            {item.onClick ? (
+                                            <button
+                                                onClick={() => {
+                                                item.onClick();
+                                                setIsMobileOpen(false); // optional: close mobile drawer
+                                                }}
+                                                className={`w-full text-left flex items-center p-2 rounded-md transition-colors ${
+                                                location.pathname === item.path
+                                                    ? "bg-purple-100 text-purple-700"
+                                                    : "text-gray-700 hover:bg-purple-50"
+                                                }`}
+                                            >
+                                                <span className="mr-3">{item.icon}</span>
+                                                <span>{item.title}</span>
+                                            </button>
+                                            ) : (
                                             <Link
                                                 to={item.path}
                                                 className={`flex items-center p-2 rounded-md transition-colors ${
-                                                    location.pathname === item.path
-                                                        ? "bg-purple-100 text-purple-700"
-                                                        : "text-gray-700 hover:bg-purple-50"
+                                                location.pathname === item.path
+                                                    ? "bg-purple-100 text-purple-700"
+                                                    : "text-gray-700 hover:bg-purple-50"
                                                 }`}
                                                 onClick={() => setIsMobileOpen(false)}
                                             >
                                                 <span className="mr-3">{item.icon}</span>
                                                 <span>{item.title}</span>
                                             </Link>
+                                            )}
                                         </li>
-                                    ))}
+                                        ))}
+
                                 </ul>
                             </nav>
                         </motion.div>
@@ -200,20 +231,39 @@ const Sidebar = () => {
                     <nav className="flex-1 overflow-y-auto p-4">
                         <ul className="space-y-2">
                             {menuItems.map((item) => (
-                                <li key={item.path}>
+                                <li key={item.title}>
+                                    {item.onClick ? (
+                                    <button
+                                        onClick={() => {
+                                        item.onClick();
+                                        setIsMobileOpen(false); // optional: close mobile drawer
+                                        }}
+                                        className={`w-full text-left flex items-center p-2 rounded-md transition-colors ${
+                                        location.pathname === item.path
+                                            ? "bg-purple-100 text-purple-700"
+                                            : "text-gray-700 hover:bg-purple-50"
+                                        }`}
+                                    >
+                                        <span className="mr-3">{item.icon}</span>
+                                        <span>{item.title}</span>
+                                    </button>
+                                    ) : (
                                     <Link
                                         to={item.path}
                                         className={`flex items-center p-2 rounded-md transition-colors ${
-                                            location.pathname === item.path
-                                                ? "bg-purple-100 text-purple-700"
-                                                : "text-gray-700 hover:bg-purple-50"
+                                        location.pathname === item.path
+                                            ? "bg-purple-100 text-purple-700"
+                                            : "text-gray-700 hover:bg-purple-50"
                                         }`}
+                                        onClick={() => setIsMobileOpen(false)}
                                     >
-                                        <span className={isOpen ? "mr-3" : "mx-auto"}>{item.icon}</span>
-                                        {isOpen && <span>{item.title}</span>}
+                                        <span className="mr-3">{item.icon}</span>
+                                        <span>{item.title}</span>
                                     </Link>
+                                    )}
                                 </li>
-                            ))}
+                                ))}
+
                         </ul>
                     </nav>
                 </div>
