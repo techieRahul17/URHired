@@ -397,6 +397,7 @@ Authorization: Bearer <your-jwt-token>
 }
 ```
 
+
 ## Usage Examples
 
 ### Using curl
