@@ -1,11 +1,26 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+const crypto = require("crypto");
 
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  resetPasswordToken: { type: String },
+  resetPasswordExpires: { type: Date },
 });
+
+userSchema.methods.generateResetToken = function () {
+  const token = crypto.randomBytes(32).toString("hex");
+  this.resetPasswordToken = crypto.createHash('sha256').update(token).digest('hex');
+  this.resetPasswordExpires = Date.now() + 10 * 60 * 1000; // 10 minutes
+  return token;
+};
+
+userSchema.methods.clearResetToken = function () {
+  this.resetPasswordToken = undefined;
+  this.resetPasswordExpires = undefined;
+};
 
 // Pre-save middleware to hash password before saving
 userSchema.pre("save", async function (next) {

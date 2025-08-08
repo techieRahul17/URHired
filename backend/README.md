@@ -32,10 +32,30 @@ backend/
 Create a `.env` file in your backend root directory:
 
 ```env
+# Database
 MONGO_URI=mongodb://localhost:27017/your-database-name
+
+# JWT
 JWT_SECRET=your-super-secret-jwt-key
+
+# Server
 PORT=5000
+
+# Email Configuration (for password reset)
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+EMAIL_SECURE=false
+EMAIL_USER=your-email@gmail.com
+EMAIL_PASS=your-app-password
+
+# Frontend URL (for reset links)
+FRONTEND_URL=http://localhost:5173
 ```
+
+### Email Setup Notes
+- For Gmail: Enable 2FA and use an app password
+- For other providers: Update HOST, PORT, and SECURE settings accordingly
+- The FRONTEND_URL is used in password reset emails
 
 ## Database Schema
 
@@ -44,7 +64,9 @@ PORT=5000
 {
   name: String (required),
   email: String (required, unique),
-  password: String (required, hashed)
+  password: String (required, hashed),
+  resetPasswordToken: String (optional, hashed),
+  resetPasswordExpires: Date (optional)
 }
 ```
 
@@ -165,6 +187,103 @@ Authorization: Bearer <your-jwt-token>
 }
 ```
 
+### 4. Forgot Password
+
+**Endpoint**: `POST /forgot-password`
+
+**Description**: Sends a password reset email to the user
+
+**Request Body**:
+```json
+{
+  "email": "john@example.com"
+}
+```
+
+**Success Response** (200):
+```json
+{
+  "success": true,
+  "message": "Password reset email sent successfully"
+}
+```
+
+**Error Responses**:
+- **400**: Email not provided
+```json
+{
+  "success": false,
+  "message": "Please provide your email"
+}
+```
+- **404**: User not found
+```json
+{
+  "success": false,
+  "message": "User not found with this email"
+}
+```
+- **500**: Email sending failed
+```json
+{
+  "success": false,
+  "message": "Email could not be sent. Please try again later."
+}
+```
+
+### 5. Reset Password
+
+**Endpoint**: `POST /reset-password/:token`
+
+**Description**: Resets user password using the reset token from email
+
+**URL Parameters**:
+- `token`: The password reset token received via email
+
+**Request Body**:
+```json
+{
+  "password": "newpassword123"
+}
+```
+
+**Success Response** (200):
+```json
+{
+  "success": true,
+  "message": "Password reset successful",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "user": {
+    "id": "user-id",
+    "name": "John Doe",
+    "email": "john@example.com"
+  }
+}
+```
+
+**Error Responses**:
+- **400**: Password not provided
+```json
+{
+  "success": false,
+  "message": "Please provide a new password"
+}
+```
+- **400**: Password too short
+```json
+{
+  "success": false,
+  "message": "Password must be at least 6 characters long"
+}
+```
+- **400**: Invalid or expired token
+```json
+{
+  "success": false,
+  "message": "Invalid token or token has expired"
+}
+```
+
 ## Usage Examples
 
 ### Using curl
@@ -194,6 +313,24 @@ curl -X POST http://localhost:5000/api/auth/login \
 ```bash
 curl -X GET http://localhost:5000/api/auth/verify \
   -H "Authorization: Bearer YOUR_JWT_TOKEN_HERE"
+```
+
+#### Request password reset:
+```bash
+curl -X POST http://localhost:5000/api/auth/forgot-password \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "john@example.com"
+  }'
+```
+
+#### Reset password with token:
+```bash
+curl -X POST http://localhost:5000/api/auth/reset-password/YOUR_RESET_TOKEN_HERE \
+  -H "Content-Type: application/json" \
+  -d '{
+    "password": "mynewpassword123"
+  }'
 ```
 
 ### Using JavaScript (Frontend)
