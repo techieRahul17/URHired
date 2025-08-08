@@ -4,6 +4,7 @@ import { useState } from "react"
 import { Link, useLocation } from "react-router-dom"
 import { motion, AnimatePresence } from "framer-motion"
 import { useAuth } from "../../context/AuthContext"
+import LogoutModal from "../../components/ui/LogoutModal";
 import {
     Home,
     Briefcase,
@@ -25,8 +26,8 @@ const Sidebar = () => {
     const location = useLocation()
     const [isOpen, setIsOpen] = useState(true)
     const [isMobileOpen, setIsMobileOpen] = useState(false)
+    const [showLogoutModal, setShowLogoutModal] = useState(false);
     const [expandedMenus, setExpandedMenus] = useState({})
-
     const basePath = userType === "recruiter" ? "/recruiter" : "/user"
     const navigate = useNavigate();
 
@@ -71,11 +72,12 @@ const Sidebar = () => {
             icon: <Settings size={20} />,
             path: `${basePath}/settings`,
         },
-        {
+       {
             title: "Logout",
             icon: <LogOut size={20} />,
-            onClick: handleLogout
-        }
+            onClick: () => setShowLogoutModal(true)
+}
+
 
     ]
 
@@ -108,7 +110,7 @@ const Sidebar = () => {
         {
             title: "Logout",
             icon: <LogOut size={20} />,
-            onClick: handleLogout
+            onClick: () => setShowLogoutModal(true)
         }
 
     ]
@@ -263,11 +265,21 @@ const Sidebar = () => {
                                     )}
                                 </li>
                                 ))}
-
                         </ul>
                     </nav>
                 </div>
             </motion.div>
+
+            <LogoutModal
+            isOpen={showLogoutModal}
+            onCancel={() => setShowLogoutModal(false)}
+            onConfirm={() => {
+                logout();
+                toast.success("Logged out successfully");
+                setShowLogoutModal(false);
+                navigate("/");
+            }}
+        />
         </>
     )
 }
