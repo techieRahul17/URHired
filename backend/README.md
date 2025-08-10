@@ -65,6 +65,9 @@ FRONTEND_URL=http://localhost:5173
   name: String (required),
   email: String (required, unique),
   password: String (required, hashed),
+  emailVerified: Boolean (default: false),
+  emailVerificationToken: String (optional, hashed),
+  emailVerificationExpires: Date (optional),
   resetPasswordToken: String (optional, hashed),
   resetPasswordExpires: Date (optional)
 }
@@ -95,8 +98,14 @@ http://localhost:5000/api/auth
 **Success Response** (201):
 ```json
 {
-  "message": "User registered successfully",
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  "success": true,
+  "message": "User registered successfully. Please check your email to verify your account.",
+  "user": {
+    "id": "user-id",
+    "name": "John Doe",
+    "email": "john@example.com",
+    "emailVerified": false
+  }
 }
 ```
 
@@ -104,13 +113,22 @@ http://localhost:5000/api/auth
 - **400**: User already exists
 ```json
 {
-  "message": "User already exists"
+  "success": false,
+  "message": "User already exists with this email"
+}
+```
+- **500**: Email sending failed
+```json
+{
+  "success": false,
+  "message": "User registration failed. Could not send verification email."
 }
 ```
 - **500**: Server error
 ```json
 {
-  "error": "Error message"
+  "success": false,
+  "message": "Error message"
 }
 ```
 
@@ -131,27 +149,38 @@ http://localhost:5000/api/auth
 **Success Response** (200):
 ```json
 {
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  "success": true,
+  "message": "Login successful",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "user": {
+    "id": "user-id",
+    "name": "John Doe",
+    "email": "john@example.com",
+    "emailVerified": true
+  }
 }
 ```
 
 **Error Responses**:
-- **404**: User not found
+- **401**: Invalid credentials
 ```json
 {
-  "message": "User not found"
+  "success": false,
+  "message": "Invalid email or password"
 }
 ```
-- **400**: Invalid credentials
+- **401**: Email not verified
 ```json
 {
-  "message": "Invalid credentials"
+  "success": false,
+  "message": "Please verify your email address before logging in"
 }
 ```
 - **500**: Server error
 ```json
 {
-  "error": "Error message"
+  "success": false,
+  "message": "Error message"
 }
 ```
 
@@ -284,6 +313,90 @@ Authorization: Bearer <your-jwt-token>
 }
 ```
 
+### 6. Verify Email
+
+**Endpoint**: `POST /verify-email/:token`
+
+**Description**: Verifies user's email address using the verification token
+
+**URL Parameters**:
+- `token`: The email verification token received via email
+
+**Success Response** (200):
+```json
+{
+  "success": true,
+  "message": "Email verified successfully. You are now logged in.",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "user": {
+    "id": "user-id",
+    "name": "John Doe",
+    "email": "john@example.com",
+    "emailVerified": true
+  }
+}
+```
+
+**Error Responses**:
+- **400**: Invalid or expired token
+```json
+{
+  "success": false,
+  "message": "Invalid token or token has expired"
+}
+```
+
+### 7. Resend Verification Email
+
+**Endpoint**: `POST /resend-verification`
+
+**Description**: Resends email verification link to user
+
+**Request Body**:
+```json
+{
+  "email": "john@example.com"
+}
+```
+
+**Success Response** (200):
+```json
+{
+  "success": true,
+  "message": "Verification email sent successfully"
+}
+```
+
+**Error Responses**:
+- **400**: Email not provided
+```json
+{
+  "success": false,
+  "message": "Please provide your email"
+}
+```
+- **404**: User not found
+```json
+{
+  "success": false,
+  "message": "User not found with this email"
+}
+```
+- **400**: Email already verified
+```json
+{
+  "success": false,
+  "message": "Email is already verified"
+}
+```
+- **500**: Email sending failed
+```json
+{
+  "success": false,
+  "message": "Email could not be sent. Please try again later."
+}
+```
+
 ## Usage Examples
 
 ### Using curl
@@ -330,6 +443,20 @@ curl -X POST http://localhost:5000/api/auth/reset-password/YOUR_RESET_TOKEN_HERE
   -H "Content-Type: application/json" \
   -d '{
     "password": "mynewpassword123"
+  }'
+```
+
+#### Verify email with token:
+```bash
+curl -X POST http://localhost:5000/api/auth/verify-email/YOUR_VERIFICATION_TOKEN_HERE
+```
+
+#### Resend verification email:
+```bash
+curl -X POST http://localhost:5000/api/auth/resend-verification \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "john@example.com"
   }'
 ```
 

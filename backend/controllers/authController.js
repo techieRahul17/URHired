@@ -22,20 +22,64 @@ const register = asyncHandler(async (req, res, next) => {
   // Password will be automatically hashed by the pre-save middleware
   const newUser = await User.create({ name, email, password });
 
-  // Generate JWT token
-  const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, { 
-    expiresIn: "1d" 
-  });
+  // Generate email verification token
+  const verificationToken = newUser.generateEmailVerificationToken();
+  await newUser.save({ validateBeforeSave: false });
 
-  res.status(201).json({
-    message: "User registered successfully",
-    token: token,
-    user: {
-      id: newUser._id,
-      name: newUser.name,
-      email: newUser.email
-    }
-  });
+  try {
+    // Create verification URL
+    const verificationURL = `${process.env.FRONTEND_URL}/verify-email/${verificationToken}`;
+
+    // Email message
+    const message = `
+      Welcome to URHired!
+      
+      Please verify your email address by clicking on the following link:
+      ${verificationURL}
+      
+      This link will expire in 10 minutes.
+      
+      If you did not create an account, please ignore this email.
+    `;
+
+    const html = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <h2 style="color: #333;">Welcome to URHired!</h2>
+        <p>Thank you for creating an account with us. Please verify your email address to complete your registration.</p>
+        <div style="text-align: center; margin: 30px 0;">
+          <a href="${verificationURL}" style="background-color: #28a745; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; display: inline-block;">Verify Email Address</a>
+        </div>
+        <p>If the button doesn't work, you can also copy and paste this link in your browser:</p>
+        <p style="word-break: break-all; color: #28a745;">${verificationURL}</p>
+        <p><strong>Note:</strong> This link will expire in 10 minutes.</p>
+        <p>If you did not create an account, please ignore this email.</p>
+        <hr style="margin: 30px 0;">
+        <p style="color: #666; font-size: 12px;">This is an automated email from URHired. Please do not reply to this email.</p>
+      </div>
+    `;
+
+    await sendEmail({
+      email: newUser.email,
+      subject: "URHired - Verify Your Email Address",
+      message,
+      html,
+    });
+
+    res.status(201).json({
+      success: true,
+      message: "User registered successfully. Please check your email to verify your account.",
+      user: {
+        id: newUser._id,
+        name: newUser.name,
+        email: newUser.email,
+        emailVerified: newUser.emailVerified
+      }
+    });
+  } catch (error) {
+    // If email sending fails, delete the user and return error
+    await User.findByIdAndDelete(newUser._id);
+    return next(new CustomError("User registration failed. Could not send verification email.", 500));
+  }
 });
 
 const login = asyncHandler(async (req, res, next) => {
@@ -58,18 +102,25 @@ const login = asyncHandler(async (req, res, next) => {
     return next(new CustomError("Invalid email or password", 401));
   }
 
+  // Check if email is verified
+  if (!user.emailVerified) {
+    return next(new CustomError("Please verify your email address before logging in", 401));
+  }
+
   // Generate JWT token
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { 
     expiresIn: "1d" 
   });
 
   res.status(200).json({
+    success: true,
     message: "Login successful",
     token: token,
     user: {
       id: user._id,
       name: user.name,
-      email: user.email
+      email: user.email,
+      emailVerified: user.emailVerified
     }
   });
 });
@@ -199,4 +250,117 @@ const resetPassword = asyncHandler(async (req, res, next) => {
   });
 });
 
-module.exports = { register, login, verifyToken, forgotPassword, resetPassword };
+const verifyEmail = asyncHandler(async (req, res, next) => {
+  const { token } = req.params;
+
+  // Hash the token to match with stored hashed token
+  const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
+
+  // Find user with matching token and check if token hasn't expired
+  const user = await User.findOne({
+    emailVerificationToken: hashedToken,
+    emailVerificationExpires: { $gt: Date.now() }
+  });
+
+  if (!user) {
+    return next(new CustomError("Invalid token or token has expired", 400));
+  }
+
+  // Mark email as verified and clear verification token
+  user.emailVerified = true;
+  user.clearEmailVerificationToken();
+  await user.save({ validateBeforeSave: false });
+
+  // Generate JWT token for automatic login
+  const jwtToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { 
+    expiresIn: "1d" 
+  });
+
+  res.status(200).json({
+    success: true,
+    message: "Email verified successfully. You are now logged in.",
+    token: jwtToken,
+    user: {
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      emailVerified: user.emailVerified
+    }
+  });
+});
+
+const resendVerificationEmail = asyncHandler(async (req, res, next) => {
+  const { email } = req.body;
+
+  // Validate email
+  if (!email) {
+    return next(new CustomError("Please provide your email", 400));
+  }
+
+  // Check if user exists
+  const user = await User.findOne({ email });
+  if (!user) {
+    return next(new CustomError("User not found with this email", 404));
+  }
+
+  // Check if email is already verified
+  if (user.emailVerified) {
+    return next(new CustomError("Email is already verified", 400));
+  }
+
+  // Generate new verification token
+  const verificationToken = user.generateEmailVerificationToken();
+  await user.save({ validateBeforeSave: false });
+
+  try {
+    // Create verification URL
+    const verificationURL = `${process.env.FRONTEND_URL}/verify-email/${verificationToken}`;
+
+    // Email message
+    const message = `
+      Email Verification - URHired
+      
+      Please verify your email address by clicking on the following link:
+      ${verificationURL}
+      
+      This link will expire in 10 minutes.
+      
+      If you did not request this, please ignore this email.
+    `;
+
+    const html = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <h2 style="color: #333;">Email Verification</h2>
+        <p>Please verify your email address to complete your registration.</p>
+        <div style="text-align: center; margin: 30px 0;">
+          <a href="${verificationURL}" style="background-color: #28a745; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; display: inline-block;">Verify Email Address</a>
+        </div>
+        <p>If the button doesn't work, you can also copy and paste this link in your browser:</p>
+        <p style="word-break: break-all; color: #28a745;">${verificationURL}</p>
+        <p><strong>Note:</strong> This link will expire in 10 minutes.</p>
+        <p>If you did not request this, please ignore this email.</p>
+        <hr style="margin: 30px 0;">
+        <p style="color: #666; font-size: 12px;">This is an automated email from URHired. Please do not reply to this email.</p>
+      </div>
+    `;
+
+    await sendEmail({
+      email: user.email,
+      subject: "URHired - Verify Your Email Address",
+      message,
+      html,
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Verification email sent successfully",
+    });
+  } catch (error) {
+    user.clearEmailVerificationToken();
+    await user.save({ validateBeforeSave: false });
+    
+    return next(new CustomError("Email could not be sent. Please try again later.", 500));
+  }
+});
+
+module.exports = { register, login, verifyToken, forgotPassword, resetPassword, verifyEmail, resendVerificationEmail };

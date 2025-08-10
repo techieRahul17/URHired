@@ -8,6 +8,9 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   resetPasswordToken: { type: String },
   resetPasswordExpires: { type: Date },
+  emailVerified: { type: Boolean, default: false },
+  emailVerificationToken: { type: String },
+  emailVerificationExpires: { type: Date }
 });
 
 userSchema.methods.generateResetToken = function () {
@@ -17,9 +20,21 @@ userSchema.methods.generateResetToken = function () {
   return token;
 };
 
+userSchema.methods.generateEmailVerificationToken = function () {
+  const token = crypto.randomBytes(32).toString("hex");
+  this.emailVerificationToken = crypto.createHash('sha256').update(token).digest('hex');
+  this.emailVerificationExpires = Date.now() + 10 * 60 * 1000; // 10 minutes
+  return token;
+};
+
 userSchema.methods.clearResetToken = function () {
   this.resetPasswordToken = undefined;
   this.resetPasswordExpires = undefined;
+};
+
+userSchema.methods.clearEmailVerificationToken = function () {
+  this.emailVerificationToken = undefined;
+  this.emailVerificationExpires = undefined;
 };
 
 // Pre-save middleware to hash password before saving
