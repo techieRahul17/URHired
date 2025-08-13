@@ -115,26 +115,132 @@ Contributions are welcome! Please feel free to submit a Pull Request.
     <td align="center">
       <a href="https://github.com/techieRahul17">
         <img src="https://github.com/techieRahul17.png" width="100px;" alt="Rahul"/>
-        <br />
-        <sub><b>Rahul</b></sub>
+        <br /><sub><b>Rahul</b></sub>
       </a>
     </td>
     <td align="center">
       <a href="https://github.com/prawinkumar1506">
-        <img src="https://github.com/prawinkumar1506.png" width="100px;" alt="Rahul"/>
-        <br />
-        <sub><b>Prawin</b></sub>
+        <img src="https://github.com/prawinkumar1506.png" width="100px;" alt="Prawin"/>
+        <br /><sub><b>Prawin</b></sub>
       </a>
     </td>
     <td align="center">
       <a href="https://github.com/Ramcharan-Swaminathan">
-        <img src="https://github.com/Ramcharan-Swaminathan.png" width="100px;" alt="Ramcharan Swaminathan"/>
-        <br />
-        <sub><b>Ramcharan</b></sub>
+        <img src="https://github.com/Ramcharan-Swaminathan.png" width="100px;" alt="Ramcharan"/>
+        <br /><sub><b>Ramcharan</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/MasterAffan">
+        <img src="https://github.com/MasterAffan.png" width="100px;" alt="Ramcharan"/>
+        <br /><sub><b>MasterAffan</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/PearlGrell">
+        <img src="https://github.com/PearlGrell.png" width="100px;" alt="PearlGrell"/>
+        <br /><sub><b>PearlGrell</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/ShubhamPrasad3012">
+        <img src="https://github.com/ShubhamPrasad3012.png" width="100px;" alt="ShubhamPrasad3012"/>
+        <br /><sub><b>ShubhamPrasad3012</b></sub>
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/root-sarvesh">
+        <img src="https://github.com/root-sarvesh.png" width="100px;" alt="root-sarvesh"/>
+        <br /><sub><b>root-sarvesh</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/msuud">
+        <img src="https://github.com/msuud.png" width="100px;" alt="msuud"/>
+        <br /><sub><b>msuud</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/ShaluKasera">
+        <img src="https://github.com/ShaluKasera.png" width="100px;" alt="ShaluKasera"/>
+        <br /><sub><b>ShaluKasera</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/vishalm342">
+        <img src="https://github.com/vishalm342.png" width="100px;" alt="vishalm342"/>
+        <br /><sub><b>vishalm342</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/SOMSSI2110">
+        <img src="https://github.com/SOMSSI2110.png" width="100px;" alt="SOMSSI2110"/>
+        <br /><sub><b>SOMSSI2110</b></sub>
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/RohiniShankari">
+        <img src="https://github.com/RohiniShankari.png" width="100px;" alt="RohiniShankari"/>
+        <br /><sub><b>RohiniShankari</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/apoorvaww">
+        <img src="https://github.com/apoorvaww.png" width="100px;" alt="apoorvaww"/>
+        <br /><sub><b>apoorvaww</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/Mounika-Chowdary28">
+        <img src="https://github.com/Mounika-Chowdary28.png" width="100px;" alt="Mounika-Chowdary28"/>
+        <br /><sub><b>Mounika-Chowdary28</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/AnushkaChanda">
+        <img src="https://github.com/AnushkaChanda.png" width="100px;" alt="AnushkaChanda"/>
+        <br /><sub><b>AnushkaChanda</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/Lingaraj-Patil">
+        <img src="https://github.com/Lingaraj-Patil.png" width="100px;" alt="Lingaraj-Patil"/>
+        <br /><sub><b>Lingaraj-Patil</b></sub>
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/shrutirathod12">
+        <img src="https://github.com/shrutirathod12.png" width="100px;" alt="shrutirathod12"/>
+        <br /><sub><b>shrutirathod12</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/riyaraj1">
+        <img src="https://github.com/riyaraj1.png" width="100px;" alt="riyaraj1"/>
+        <br /><sub><b>riyaraj1</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/SrishtiSinha2003">
+        <img src="https://github.com/SrishtiSinha2003.png" width="100px;" alt="SrishtiSinha2003"/>
+        <br /><sub><b>SrishtiSinha2003</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/sanyogeetapradhan">
+        <img src="https://github.com/sanyogeetapradhan.png" width="100px;" alt="sanyogeetapradhan"/>
+        <br /><sub><b>sanyogeetapradhan</b></sub>
       </a>
     </td>
   </tr>
 </table>
+
 
  ## Getting Started for Beginners 
 
