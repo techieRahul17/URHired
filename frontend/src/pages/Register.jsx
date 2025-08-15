@@ -21,7 +21,8 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const { login } = useAuth();
+  const { login } = useAuth(); 
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
