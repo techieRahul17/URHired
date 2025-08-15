@@ -1,14 +1,15 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import ForgetPassword from './pages/ForgetPassword';
 import RecruiterDashboard from './pages/recruiter/Dashboard';
 import RecruiterJobs from './pages/recruiter/Jobs';
 import RecruiterJobDetails from './pages/recruiter/JobDetails';
 import RecruiterApplications from './pages/recruiter/Applications';
 import RecruiterInterviews from './pages/recruiter/Interviews';
 import RecruiterCandidateDetails from './pages/recruiter/CandidateDetails';
+import RecruiterSettings from './pages/recruiter/Settings';
 import UserDashboard from './pages/user/Dashboard';
 import UserJobs from './pages/user/Jobs';
 import UserApplications from './pages/user/Applications';
@@ -16,14 +17,13 @@ import UserInterviews from './pages/user/Interviews';
 import UserProfile from './pages/user/Profile';
 import NotFound from './pages/NotFound';
 import { AuthProvider } from './context/AuthContext';
-import ForgetPassword from './pages/ForgetPassword';
-import RecruiterSettings from './pages/recruiter/Settings';
 
 function App() {
     return (
         <AuthProvider>
             <Router>
                 <Routes>
+                    {/* Public Routes */}
                     <Route path="/" element={<Home />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
@@ -45,7 +45,7 @@ function App() {
                     <Route path="/user/interviews" element={<UserInterviews />} />
                     <Route path="/user/profile" element={<UserProfile />} />
 
-
+                    {/* 404 Page */}
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </Router>
