@@ -28,9 +28,10 @@ const HeroSection = () => {
                 transition={{
                     repeat: Infinity,
                     duration: 5,
-                    ease: "easeInOut"
+                    ease: "easeInOut",
+                    delay:1
                 }}
-                className="absolute top-40 right-[15%] w-20 h-20 opacity-70"
+                className="absolute top-20 right-[15%] w-20 h-20 opacity-70"
             >
                 <svg viewBox="0 0 24 24" fill="white" className="w-full h-full">
                     <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20M9,13V19H7V13H9M15,15V19H17V15H15M11,11V19H13V11H11Z" />
@@ -39,16 +40,17 @@ const HeroSection = () => {
 
             <motion.div
                 animate={{
-                    y: [0, 10, 0],
-                    rotate: [0, -5, 0]
+                    y: [0, -10, 0],
+                    rotate: [0, 5, 0]
                 }}
                 transition={{
                     repeat: Infinity,
                     duration: 4,
                     ease: "easeInOut",
-                    delay: 1
+                 
+                   
                 }}
-                className="absolute top-60 left-[15%] w-16 h-16 opacity-70"
+                className="absolute top-50 left-[15%] w-16 h-16 opacity-40"
             >
                 <svg viewBox="0 0 24 24" fill="white" className="w-full h-full">
                     <path d="M20,17A2,2 0 0,0 22,15V4A2,2 0 0,0 20,2H9.46C9.81,2.61 10,3.3 10,4H20V15H11V17M15,7V9H9V22H7V16H5V22H3V14H1.5V9A2,2 0 0,1 3.5,7H15M8,4A2,2 0 0,1 6,6A2,2 0 0,1 4,4A2,2 0 0,1 6,2A2,2 0 0,1 8,4Z" />
