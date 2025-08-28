@@ -45,6 +45,8 @@ const Input = ({
             focus:outline-none focus:ring-2 ${error ? "focus:ring-red-200" : "focus:ring-purple-200"}
             transition-all duration-200
             ${icon ? "pl-10" : ""}
+            text-gray-900 placeholder-gray-400 bg-white
+            dark:text-white dark:placeholder-gray-500 dark:bg-gray-900
           `}
                     onFocus={() => setFocused(true)}
                     onBlur={() => setFocused(false)}

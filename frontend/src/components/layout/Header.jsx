@@ -9,11 +9,13 @@ import {
 } from "lucide-react"
 import { useAuth } from "../../context/AuthContext"
 import Avatar from "../ui/Avatar"
+import LogoutModal from "../ui/LogoutModal"
 import { useNavigate } from "react-router-dom"
 
 const Header = ({ title }) => {
   const { currentUser, userType, logout } = useAuth()
   const [showNotifications, setShowNotifications] = useState(false)
+  const [showLogoutModal, setShowLogoutModal] = useState(false)
   const [showProfile, setShowProfile] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
   const [notifications, setNotifications] = useState([])
@@ -74,9 +76,8 @@ const Header = ({ title }) => {
     return () => document.removeEventListener("mousedown", handleClickOutside)
   }, [])
 
-  const handleLogout = async () => {
-    await logout()
-    navigate("/")
+  const handleLogout =  () => {
+    setShowLogoutModal(true)
   }
 
   const handleProfileNavigation = () => {
@@ -116,6 +117,7 @@ const Header = ({ title }) => {
   const unreadCount = notifications.filter(n => !n.read).length
 
   return (
+    <>
     <header className="bg-white shadow-sm py-4 px-6 flex items-center justify-between">
       <div>
         <h1 className="text-2xl font-bold text-gray-800">{title}</h1>
@@ -305,6 +307,17 @@ const Header = ({ title }) => {
         </div>
       </div>
     </header>
+    {/* Logout Confirmation Modal */}
+      <LogoutModal
+        isOpen={showLogoutModal}
+        onCancel={() => setShowLogoutModal(false)}
+        onConfirm={() => {
+          logout()
+          setShowLogoutModal(false)
+          navigate("/")
+        }}
+      />      
+</>
   )
 }
 
