@@ -8,8 +8,12 @@ import { useAuth } from "../context/AuthContext";
 import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+
+import { auth, provider, signInWithPopup, signOut } from "../firebase";
+
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -53,7 +57,25 @@ const Login = () => {
       setLoading(false);
     }
   };
+const handleGoogleSignIn = async () => {
+  try {
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
 
+    // Use your auth context to log in the user
+    login(user, userType);
+
+    // Redirect based on userType
+    if (userType === "recruiter") {
+      navigate("/recruiter/dashboard");
+    } else {
+      navigate("/user/dashboard");
+    }
+  } catch (error) {
+    console.error("Error signing in with Google:", error);
+    setError("Google sign-in failed. Please try again.");
+  }
+};
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-500 to-indigo-600 p-4">
       <motion.div
@@ -197,7 +219,6 @@ const Login = () => {
                 </a>
               </div>
             </div>
-
             <Button
               type="submit"
               variant="primary"
@@ -207,6 +228,20 @@ const Login = () => {
             >
               {loading ? "Signing in..." : "Sign In"}
             </Button>
+            <p className="text-black text-sm" style={{textAlign: "center"}}>OR</p>
+<button
+  type="button"
+  onClick={handleGoogleSignIn}
+  className="flex items-center gap-2 px-6 py-2 bg-white border rounded-lg shadow-md hover:bg-gray-100 transition w-full mb-4" style={{justifyContent:"center"}}
+>
+  <img
+    src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+    alt="Google Logo"
+    className="w-5 h-5"
+  />
+  <span className="text-gray-700">Sign in with Google</span>
+</button>
+            
 
             <p className="text-center text-sm text-gray-600">
               Don't have an account?{" "}
