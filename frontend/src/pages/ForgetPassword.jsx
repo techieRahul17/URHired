@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { motion } from "framer-motion"
 import { Mail, Lock, ShieldCheck } from "lucide-react"
 import Input from "../components/ui/Input"
 import Button from "../components/ui/Button"

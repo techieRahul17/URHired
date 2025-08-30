@@ -18,10 +18,13 @@ import NotFound from './pages/NotFound';
 import { AuthProvider } from './context/AuthContext';
 import ForgetPassword from './pages/ForgetPassword';
 import RecruiterSettings from './pages/recruiter/Settings';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
     return (
         <AuthProvider>
+            <ToastContainer position="top-right" autoClose={3000} />
             <Router>
                 <Routes>
                     <Route path="/" element={<Home />} />
@@ -54,3 +57,24 @@ function App() {
 }
 
 export default App;
+
+import React, { useEffect, useState } from 'react';
+import Loader from './components/Loader';
+
+function App() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => setIsLoading(false), 1500);
+    return () => clearTimeout(timeout);
+  }, []);
+
+  if (isLoading) return <Loader />;
+
+  return (
+    <div className="relative z-10">
+      {/* Main App Content */}
+    </div>
+  );
+}
+

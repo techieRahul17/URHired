@@ -8,7 +8,12 @@ import { useAuth } from "../context/AuthContext";
 import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+
 import { auth, provider, signInWithPopup, signOut } from "../firebase";
+
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -36,15 +41,18 @@ const Login = () => {
         };
 
         login(user, userType);
-
+        
         // Redirect to the appropriate dashboard
         if (userType === "recruiter") {
+          toast.success("login successful");
           navigate("/recruiter/dashboard");
         } else {
+          toast.success("login successful");
           navigate("/user/dashboard");
         }
       }, 1500);
     } catch (err) {
+      toast.error("something went wrong,please try again");
       setError("Failed to log in. Please check your credentials.");
       setLoading(false);
     }
